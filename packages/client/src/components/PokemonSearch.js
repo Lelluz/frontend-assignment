@@ -25,10 +25,6 @@ function PokemonSearch() {
 
   if (loading) return <p>Loading ...</p>;
 
-  if (data && data.pokemons) {
-    setPokemons(data.pokemons.edges.map(n => n.node));
-  }
-  
   return (
     <>
       <Search
@@ -36,7 +32,12 @@ function PokemonSearch() {
         allowClear
         enterButton="Search"
         size="large"
-        onSearch={(name) => getPokemons({ variables: { q: name }})}
+        onSearch={(name) => {
+          getPokemons({ variables: { q: name }})
+          if (data) {
+            setPokemons(data.pokemons.edges.map(n => n.node));
+          }
+        }}
       />
       <PokemonList pokemons={pokemons}/>
     </>
