@@ -1,28 +1,13 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
+import { POKEMON_TYPES } from '../pokemonsTypes';
+
+console.log(POKEMON_TYPES)
 
 const getColorTag = type => {
-  switch (type) {
-    case "bug": return "lime";
-    case "dark": return "gray";
-    case "dragon": return "purple";
-    case "electric": return "yellow";
-    case "fairy": return "magenta";
-    case "fighting": return "orange";
-    case "fire": return "red";
-    case "flying": return "geekblue";
-    case "ghost": return "purple";
-    case "grass": return "green";
-    case "ground": return "gold";
-    case "ice": return "cyan";
-    case "normal": return "gray";
-    case "poison": return "purple";
-    case "psychic": return "magenta";
-    case "rock": return "yellow";
-    case "steel": return "gray";
-    case "water": return "blue";
-    default: return "gray";
-  }
+  const typeObj = POKEMON_TYPES.filter(t => t.name === type)
+  if (typeObj) return typeObj[0].color
+  return ""
 }
 
 const columns = [
@@ -38,7 +23,7 @@ const columns = [
     render: types => (
       <>
         {types.map(type => {
-          const color = getColorTag(type.toLowerCase());
+          const color = getColorTag(type);
           return (
             <Tag color={color} key={type}>
               {type}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Row, Col, Input, Select } from 'antd';
 import { gql } from "@apollo/client";
 import { GET_POKEMONS_BY_NAME } from '../queries.js'
+import { POKEMON_TYPES } from '../pokemonsTypes';
 import PokemonList from './PokemonList.js';
 import useImperativeQuery from './useImperativeQuery.js';
 
@@ -34,22 +35,15 @@ function PokemonSearch() {
         </Col>
         <Col span={10}>
           <Select
-            showSearch
             size="large"
             style={{ width: '100%' }}
-            placeholder="Select a person"
+            placeholder="Select a Pokemon type"
             optionFilterProp="children"
-            /* onChange={onChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-            } */
+            /* onChange={onChange} */
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            {POKEMON_TYPES.map(type =>
+              <Option value={type.name}>{type.name}</Option>
+            )}
           </Select>
         </Col>
       </Row>
