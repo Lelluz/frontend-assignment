@@ -1,5 +1,29 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
+
+const getColorTag = type => {
+  switch (type) {
+    case "bug": return "lime";
+    case "dark": return "gray";
+    case "dragon": return "purple";
+    case "electric": return "yellow";
+    case "fairy": return "magenta";
+    case "fighting": return "orange";
+    case "fire": return "red";
+    case "flying": return "geekblue";
+    case "ghost": return "purple";
+    case "grass": return "green";
+    case "ground": return "gold";
+    case "ice": return "cyan";
+    case "normal": return "gray";
+    case "poison": return "purple";
+    case "psychic": return "magenta";
+    case "rock": return "yellow";
+    case "steel": return "gray";
+    case "water": return "blue";
+    default: return "gray";
+  }
+}
 
 const columns = [
   {
@@ -9,8 +33,20 @@ const columns = [
   },
   {
     title: 'Type',
-    dataIndex: 'type',
-    key: 'type',
+    dataIndex: 'types',
+    key: 'types',
+    render: types => (
+      <>
+        {types.map(type => {
+          const color = getColorTag(type.toLowerCase());
+          return (
+            <Tag color={color} key={type}>
+              {type}
+            </Tag>
+          );
+        })}
+      </>
+    ),
   },
   {
     title: 'Classification',
@@ -20,11 +56,8 @@ const columns = [
 ];
 
 function PokemonList(props) {
-
-  const pokemons = props.pokemons
-
   return (
-    <Table columns={columns} dataSource={pokemons} />
+    <Table columns={columns} dataSource={props.pokemons} />
   );
 }
 
