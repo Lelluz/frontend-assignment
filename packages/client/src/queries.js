@@ -1,12 +1,12 @@
-export const GET_POKEMONS_BY_NAME = name => `
-{
-  pokemons(q: ${name}) {
+export const GET_POKEMONS_BY_NAME = `
+query getPokemonsByName($q: String!) {
+  pokemons(q: $q) {
     edges {
-    	node {
-      	name,
+      node {
+        name,
         types
-    	}
-   	}
+      }
+     }
   }
 }`;
 
