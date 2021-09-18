@@ -9,6 +9,7 @@ import { Connection } from "../types";
 interface Pokemon {
   id: string;
   name: string;
+  classification: string;
   types: string[];
 }
 

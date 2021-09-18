@@ -4,7 +4,8 @@ query getPokemonsByName($q: String!) {
     edges {
       node {
         name,
-        types
+        types,
+        classification
       }
      }
   }
@@ -16,7 +17,8 @@ query getPokemonsByType($type: String!) {
     edges {
     	node {
       	name,
-        types
+        types,
+        classification
     	}
    	}
   }
