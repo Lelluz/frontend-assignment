@@ -1,1 +1,23 @@
 @import '~antd/dist/antd.css';
+
+.pokemon-logo {
+  display: block;
+  margin: 0 auto;
+  height: 100%;
+  padding: 10px;
+}
+
+#root .ant-layout {
+  display: block;
+  min-height: 100vh;
+}
+
+.ant-layout-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.ant-layout-content > * {
+  padding: 25px 0;
+}

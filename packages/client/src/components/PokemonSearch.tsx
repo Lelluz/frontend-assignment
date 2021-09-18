@@ -35,7 +35,7 @@ function PokemonSearch(any: any) {
       <Row justify='space-between'>
         <Col span={10}>
           <Search
-            placeholder="Search Pokemons"
+            placeholder="Search Pokémons"
             allowClear
             enterButton="Search"
             size="large"
@@ -46,7 +46,7 @@ function PokemonSearch(any: any) {
           <Select
             size="large"
             style={{ width: '100%' }}
-            placeholder="Select a Pokemon type"
+            placeholder="Select a Pokémon type"
             optionFilterProp="children"
             onChange={handleSearchByType}
           >
