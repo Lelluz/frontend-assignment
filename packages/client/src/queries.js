@@ -11,8 +11,8 @@ query getPokemonsByName($q: String!) {
 }`;
 
 export const GET_POKEMONS_BY_TYPE = `
-{
-  pokemonsByType(type: "Fire") {
+query getPokemonsByType($type: String!) {
+  pokemonsByType(type: $type) {
     edges {
     	node {
       	name,
