@@ -1,12 +1,11 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
-import { POKEMON_TYPES } from '../pokemonsTypes';
+import { IPokemons, PokemonTypesAndColors } from '../dataStructure';
 
-console.log(POKEMON_TYPES)
-
-const getColorTag = type => {
-  const typeObj = POKEMON_TYPES.filter(t => t.name === type)
-  if (typeObj) return typeObj[0].color
+const getColorTag = (type: string) => {
+  for(const [pType, pColor] of Object.entries(PokemonTypesAndColors)) {
+    if (pType === type) return pColor
+  }
   return ""
 }
 
@@ -20,9 +19,9 @@ const columns = [
     title: 'Type',
     dataIndex: 'types',
     key: 'types',
-    render: types => (
+    render: (types: []) => (
       <>
-        {types.map(type => {
+        {types.map((type: string) => {
           const color = getColorTag(type);
           return (
             <Tag color={color} key={type}>
@@ -40,7 +39,7 @@ const columns = [
   }
 ];
 
-function PokemonList(props) {
+function PokemonList(props: IPokemons) {
   return (
     <Table columns={columns} dataSource={props.pokemons} />
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import pokemonLogo from './pokemon-logo.svg';
 import { Layout } from 'antd';
-import PokemonSearch from './components/PokemonSearch.js';
+import PokemonSearch from './components/PokemonSearch';
 
 const { Header, Content } = Layout;
 
