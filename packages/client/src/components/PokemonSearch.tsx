@@ -25,7 +25,7 @@ function PokemonSearch(any: any) {
   const handleSearchByName = async (name: string, loadMoreClicked: boolean = false) => {
 
     const qParams = {
-      q: lastSearch.nameValue,
+      q: loadMoreClicked ? lastSearch.nameValue : name,
       after: loadMoreClicked ? lastSearch.endCursor : "0"
     },
     { data, error } = await getPokemonsByName(qParams);
