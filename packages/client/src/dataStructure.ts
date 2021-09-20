@@ -8,6 +8,14 @@ export interface IPokemons {
   pokemons: IPokemon[]
 }
 
+export interface ILastSearch {
+  nameValue: string,
+  typeValue: string,
+  hasNextPage: boolean,
+  endCursor: string,
+  loadMoreClicked: boolean
+}
+
 export enum PokemonTypesAndColors {
   Bug = "lime",
   Dark = "gray",

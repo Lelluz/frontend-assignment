@@ -4,9 +4,9 @@ import { IPokemons, PokemonTypesAndColors } from '../dataStructure';
 
 const getColorTag = (type: string) => {
   for(const [pType, pColor] of Object.entries(PokemonTypesAndColors)) {
-    if (pType === type) return pColor
+    if (pType === type) return pColor;
   }
-  return ""
+  return "";
 }
 
 const columns = [
@@ -41,7 +41,11 @@ const columns = [
 
 function PokemonList(props: IPokemons) {
   return (
-    <Table columns={columns} dataSource={props.pokemons} />
+    <Table
+      columns={columns}
+      dataSource={props.pokemons}
+      pagination={false}
+    />
   );
 }
 
