@@ -1,4 +1,3 @@
-import React from 'react';
 import { Table, Tag } from 'antd';
 import { IPokemons, PokemonTypesAndColors } from '../dataStructure';
 
@@ -13,12 +12,10 @@ const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
-    key: 'name'
   },
   {
     title: 'Type',
     dataIndex: 'types',
-    key: 'types',
     render: (types: []) => (
       <>
         {types.map((type: string) => {
@@ -35,13 +32,13 @@ const columns = [
   {
     title: 'Classification',
     dataIndex: 'classification',
-    key: 'classification',
   }
 ];
 
 function PokemonList(props: IPokemons) {
   return (
     <Table
+      rowKey="uid"
       columns={columns}
       dataSource={props.pokemons}
       pagination={false}

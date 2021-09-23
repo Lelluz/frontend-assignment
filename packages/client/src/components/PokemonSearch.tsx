@@ -22,8 +22,13 @@ function PokemonSearch(any: any) {
     getPokemonsByName = useImperativeQuery(gql(GET_POKEMONS_BY_NAME)),
     getPokemonsByType = useImperativeQuery(gql(GET_POKEMONS_BY_TYPE));
 
-  const handleSearchByName = async (name: string, loadMoreClicked: boolean = false) => {
+  const handleLoadMoreSearch = () => {
+    lastSearch.typeValue !== ''
+    ? handleSearchByType(lastSearch.typeValue, true)
+    : handleSearchByName(lastSearch.nameValue, true);
+  }
 
+  const handleSearchByName = async (name: string, loadMoreClicked: boolean = false) => {
     const qParams = {
       q: loadMoreClicked ? lastSearch.nameValue : name,
       after: loadMoreClicked ? lastSearch.endCursor : "0"
@@ -32,7 +37,11 @@ function PokemonSearch(any: any) {
 
     if (error) console.log(error);
     if (data) {
-      setPokemons(data.pokemons.edges.map((n: any) => n.node));
+
+      const pokemonsResult = data.pokemons.edges.map((n: any) => n.node),
+        newPokemonsState = loadMoreClicked ? [...pokemons, ...pokemonsResult] : pokemonsResult;
+
+      setPokemons(newPokemonsState);
       setLastSearch({
         nameValue: name,
         typeValue: '',
@@ -44,18 +53,34 @@ function PokemonSearch(any: any) {
     setSearchValue('')
   }
 
-  const handleSearchByType = async (type: string) => {
-    const { data, error } = await getPokemonsByType({ type: type });
+  const handleSearchByType = async (type: string, loadMoreClicked: boolean = false) => {
+    const qParams = {
+      type: loadMoreClicked ? lastSearch.typeValue : type,
+      after: loadMoreClicked ? lastSearch.endCursor : "0"
+    },
+    { data, error } = await getPokemonsByType(qParams);
+
     if (error) console.log(error);
     if (data) {
-      setPokemons(data.pokemonsByType.edges.map((n: any) => n.node));
+
+      const pokemonsResult = data.pokemonsByType.edges.map((n: any) => n.node),
+        newPokemonsState = loadMoreClicked ? [...pokemons, ...pokemonsResult] : pokemonsResult;
+
+      setPokemons(newPokemonsState);
+      setLastSearch({
+        nameValue: '',
+        typeValue: type,
+        hasNextPage: data.pokemonsByType.pageInfo.hasNextPage,
+        endCursor: data.pokemonsByType.pageInfo.endCursor,
+        loadMoreClicked: loadMoreClicked
+      })
     }
   }
 
   return (
     <>
-      <Row justify='space-between'>
-        <Col span={10}>
+      <Row justify='space-between' gutter={[0, 15]}>
+        <Col xs={24} sm={11} lg={10}>
           <Search
             placeholder="Search Pokémons"
             allowClear
@@ -66,31 +91,27 @@ function PokemonSearch(any: any) {
             onChange={e => setSearchValue(e.target.value)}
           />
         </Col>
-        <Col span={10}>
+        <Col xs={24} sm={11} lg={10}>
           <Select
             size="large"
             style={{ width: '100%' }}
             placeholder="Select a Pokémon type"
             optionFilterProp="children"
             defaultValue="Filter by type"
-            onChange={handleSearchByType}
+            onChange={type => handleSearchByType(type, false)}
           >
             {Object.keys(PokemonTypesAndColors).map(type =>
-              <Option value={type}>{type}</Option>
+              <Option value={type} key={type}>{type}</Option>
             )}
           </Select>
         </Col>
       </Row>
       <PokemonList pokemons={pokemons}/>
-      {(lastSearch.hasNextPage) && (
-        <Button
-          type="primary"
-          size="large"
-          onClick={() => handleSearchByName(lastSearch.nameValue, true)}
-        >
-          Load more
-        </Button>
-      )}
+      <Row justify='center'>
+        {(lastSearch.hasNextPage) && (
+          <Button type="primary" onClick={() => handleLoadMoreSearch()}>Load more</Button>
+        )}
+      </Row>
     </>
   );
 }
